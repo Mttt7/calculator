@@ -1,0 +1,153 @@
+@font-face {
+    font-family: calcFont;
+    src: url(/fonts/digit7.ttf);
+}
+
+:root {
+    --operations-buttons: #616A6B;
+    --operations-fon-color:white;
+    --num-buttons: #AAB7B8;
+  }
+
+body{
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-image: linear-gradient(to bottom left,#E74C3C ,#3498DB);
+}
+
+
+/* CALCULATOR */
+#calculator{
+    display: grid;
+    width: 700px;
+    height: auto;
+    grid-template-areas:
+    "logo logo clock clock"
+    "scr  scr  scr   scr  "
+    "scr  scr  scr   scr  "
+    "ac   ac   perc  div "
+    "num7 num8 num9  multp"
+    "num4 num5 num6  subst"
+    "num1 num2 num3  addit"
+    "num0 com  eq    addit";
+    row-gap: 15px;
+    column-gap: 15px;
+    padding: 24px;
+    border-radius: 50px;
+    background-color:rgb(73, 103, 151);
+    box-shadow: 14px 14px 0px 4px black;
+    
+}
+#calculator>*{
+    box-shadow: 6px 6px 0px black;
+    height: 50px;
+    width: auto;
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+    border-radius: 20px;
+    background-color: var(--num-buttons);
+    border: 1px solid black;
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 45px;
+    
+}
+
+#logo{
+    font-size: 70px;
+    grid-area: logo;
+}
+#clock{
+    font-size: 70px;
+    grid-area: clock;
+}
+#screen,#clock,#logo{
+    font-family: calcFont;
+    background-image: linear-gradient(to left, rgba(42, 213, 236, 0.68), rgba(216, 220, 211, 0.762));
+}
+#screen{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    grid-area: scr;
+    height: auto;
+    padding: 28px;
+    padding-top: 5px;
+    font-size: 110px;
+    
+}
+#AC{
+    background-color: #E74C3C;
+    grid-area: ac;
+}
+
+
+#num7{
+    grid-area: num7;
+}
+#num8{
+    grid-area: num8;
+}
+#num9{
+    grid-area: num9;
+}
+#num4{
+    grid-area: num4;
+}
+#num5{
+    grid-area: num5;
+}
+#num6{
+    grid-area: num6;
+}
+#num1{
+    grid-area: num1;
+}
+#num2{
+    grid-area: num2;
+}
+#num3{
+    grid-area: num3;
+}
+#num0{
+    grid-area: num0;
+}
+#percentage{
+    background-color: var(--operations-buttons);
+    color:var(--operations-fon-color);
+    grid-area: perc;
+}
+#multiply{
+    grid-area: multp;
+    background-color: var(--operations-buttons);
+    color:var(--operations-fon-color);
+}
+#substract{
+    grid-area: subst;
+    background-color: var(--operations-buttons);
+    color:var(--operations-fon-color);
+}
+#add{
+    grid-area: addit;
+    height: auto;
+    display: flex;
+    align-items: center;
+    background-color: var(--operations-buttons);
+    color:var(--operations-fon-color);
+}
+#division{
+    background-color: var(--operations-buttons);
+    color:var(--operations-fon-color);
+    grid-area:div;
+}
+#equal{
+    grid-area: eq;
+    background-color: #E74C3C;
+}
+#comma{
+    grid-area: com;
+}
+/* align self  justify self */
