@@ -1,0 +1,69 @@
+let result
+    if(screen.innerText!=''){
+        if(num1===undefined){
+            num1=screen.innerText
+            screen.innerText=''
+            console.log("num1 is",num1)
+            op=e.target.innerText
+        }
+        else if(num2===undefined){
+            num2=screen.innerText
+            screen.innerText=''
+            console.log("num2 is",num2)
+            result = operate(num1,num2,op)
+            num1=result
+            op=undefined
+            num2=undefined
+            screen.innerText=result
+        }
+        if(e.target.innerText==='='){
+            console.log("XXX")
+            
+
+        }
+        
+        
+    }
+
+
+
+
+    let result
+    if(num1==undefined){
+        num1=screen.innerText
+        op=e.target.innerText
+        
+    }
+    else if(num2==undefined){
+        num2=screen.innerText
+        result=operate(num1,num2,op)
+        op=e.target.innerText
+        num1=result
+        num2=undefined
+        
+        
+    }
+    if(e.target.innerText=='='){
+        num1=screen.innerText
+        num2=undefined
+        op=undefined
+        
+    }
+
+
+
+let result
+    if(num1==null){
+        num1=screen.innerText
+        op=e.target.innerText
+        screen.innerText=''
+    }
+    else if(num2==null){
+        num2=screen.innerText
+        result=operate(num1,num2,op)
+        op=e.target.innerText
+        num2=null
+        num1=result
+        override=true
+    }
+    
