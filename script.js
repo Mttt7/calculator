@@ -59,7 +59,7 @@ setInterval(updateClock,1000)
 
 
 /* CALCULATOR */
-const screen = document.querySelector("#screen")
+const calcScreen = document.querySelector("#screen")
 const smallScreen = document.querySelector("#small-screen")
 const AC=document.querySelector("#AC")
 const numbers=document.querySelectorAll(".number")
@@ -68,23 +68,28 @@ const operands=document.querySelectorAll(".operand")
 
 
 let storedValue=null
-let num1=null
-let num2=null
 let op=null /* add mltp div sub*/
 
 let override=false
 
 numbers.forEach((numb)=>{
     numb.addEventListener('click',(e)=>{
-        screen.innerText+=e.target.innerText
+        if(override) {
+            calcScreen.innerText=e.target.innerText
+            override=false
+        }
+        else{
+        calcScreen.innerText+=e.target.innerText
+        storedValue+=e.target.innerText
+        }
+
     })
 })
-
 AC.addEventListener('click',()=>{
-    num1=null
     op=null
-    num2=null
-    screen.innerText=''
+    a=[]
+    calcScreen.innerText=''
+    storedValue=null
     smallScreen.innerText=''
 })
 
@@ -99,31 +104,42 @@ function displaySmallScreen(number,operator){
     smallScreen.innerText+=number+operator
 }
 function displayScreen(result){
-    screen.innerText=result
+   calcScreen.innerText=result
 }
+
+
 function eventHandler(e){
-    num1=screen.innerText
+    override=true
+    storedValue=calcScreen.innerText
+    calcScreen.innerText=''
     op=e.target.innerText
-    storeData(num1,op)
-    displaySmallScreen(num1,op)
-    num1=null
+    storeData(storedValue,op)
+    displaySmallScreen(storedValue,op)
+    storedValue=null
     op=null
-    screen.innerText=''
+    
+    
 
 }
 
 
-var arr=[]
+var a=[]
 function storeData(number,operator){
     let result
-    arr.push(number)
-    arr.push(operator)
+    console.log( "Array stored BEFORE before="+a)
+    if(a.length!=1)a.push(number)
+    a.push(operator)
+
+    console.log( "Array stored  before="+a)
+    result=operate(a)
+    console.log( "Array stored after="+a)
     
-        result=operate(arr)
-        displayScreen(result)
-    
-    console.log("ARR1:",arr)
     console.log('result:',result)
+    if(result!=undefined){
+        displayScreen(result)
+        storedValue=result
+    }
+    
     
 
 }
@@ -131,11 +147,12 @@ function storeData(number,operator){
 /*  [1,+,3,-,5,-,7,/,2,=]   len=9*/
 //console.log(operate([2,'+',3,'-',10,'*',2,'/',3,'*',100,'=']))
 
-function operate(a){
+function operate(){
     let result
 
-    console.log("ARR2",a)
+    
     for(let i=0;i<a.length;i+=2){
+        console.log("i="+i+" array="+a)
         console.log("X")
         let temp
         if(a[i+2]){
@@ -144,7 +161,7 @@ function operate(a){
             temp=a[i+2]
             result = +(a[i])+(+temp)
             a[i+2]=result
-            console.log("ARR3",a)
+            
             a.splice(i,2)
             
             }
@@ -152,7 +169,7 @@ function operate(a){
                 temp=a[i+2]
                 result = (+a[i])-(+temp)
                 a[i+2]=result
-                console.log("ARR3",a)
+                
                 a.splice(i,2)
             }
             else if(a[i+1]=='/'){
@@ -167,33 +184,17 @@ function operate(a){
                 a[i+2]=result
                 a.splice(i,2)
             }
+
+            if(a[i+1]=='='){
+                result=a[0]
+                a=[result]
+            }
+
+            
         }
     }
+    console.log( "array="+a)
     return result
 
 
-        /*
-    let result
-    switch(op) {
-        case 'X':
-            result=num1*num2
-            screen.innerText=result
-          break;
-        case '+':
-            result=(+num1)+(+num2)
-            screen.innerText=result
-          break;
-        case '-':
-            result=num1-num2
-            screen.innerText=result
-          break;
-        case '/':
-            result=num1/num2
-            screen.innerText=result
-          break;
-        default:
-        
-      }
-      return result
-        */
 }
