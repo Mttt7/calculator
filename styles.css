@@ -78,11 +78,11 @@ body{
     grid-area: clock;
    
 }
-#screen,#clock,#logo{
+#screen-wrapper,#clock,#logo{
     font-family: calcFont;
     background-image: linear-gradient(to left, rgba(42, 213, 236, 0.68), rgba(216, 220, 211, 0.762));
 }
-#screen{
+#screen-wrapper{
     height: 100px;
     display: flex;
     justify-content: flex-end;
@@ -92,7 +92,25 @@ body{
     padding: 28px;
     padding-top: 5px;
     font-size: 110px;
-    
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content:center;
+    gap: 25px;
+}
+#screen{
+    height: 90px;
+    display: flex;
+    justify-content: flex-end;
+    font-size: 90px;
+    grid-area: screen;
+}
+#small-screen{
+    height:30px ;
+    display: flex;
+    justify-content: flex-end;
+    font-size:30px;
+    grid-area: small;
 }
 #AC{
     background-color: #E74C3C;
