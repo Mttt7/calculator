@@ -1,8 +1,9 @@
+/* AMINATION */
 const testBtn=document.querySelector("#num5")
 const clock=document.querySelector("#clock")
 const logo = document.querySelector("#logo")
 
-/* AMINATION */
+
 const clickableButtons=document.querySelectorAll(".clickable")
 clickableButtons.forEach(butt=>{
     butt.addEventListener('mousedown',(e)=>{
@@ -29,172 +30,12 @@ logo.addEventListener('click',()=>{
     window.open(ig, '_blank')
     console.log(2)
 })
-
-
-/* CLOCK */
-/*
-function updateClock(){ 
-    let date=new Date()
-    
-    let hour=date.getHours()
-    let minute=date.getMinutes()
-    let second=date.getSeconds()
-    if(hour<10){
-        hour="0"+date.getHours()
-    }
-    if(minute<10){
-        minute="0"+date.getHours()
-    }
-    if(second<10){
-        second="0"+date.getHours()
-    }
-    currentTime=hour+":"+minute+":"+second
-    clock.innerHTML=currentTime
-        
-    
-    
-}
-setInterval(updateClock,1000)
-*/
-
-
-/* CALCULATOR */
-const calcScreen = document.querySelector("#screen")
-const smallScreen = document.querySelector("#small-screen")
-const AC=document.querySelector("#AC")
-const numbers=document.querySelectorAll(".number")
-const operands=document.querySelectorAll(".operand")
+/* --------------- */
+/* Calculator */
 
 
 
-let storedValue=null
-let op=null /* add mltp div sub*/
-
-let override=false
-
-numbers.forEach((numb)=>{
-    numb.addEventListener('click',(e)=>{
-        if(override) {
-            calcScreen.innerText=e.target.innerText
-            override=false
-        }
-        else{
-        calcScreen.innerText+=e.target.innerText
-        storedValue+=e.target.innerText
-        }
-
-    })
-})
-AC.addEventListener('click',()=>{
-    op=null
-    a=[]
-    calcScreen.innerText=''
-    storedValue=null
-    smallScreen.innerText=''
-})
 
 
 
-operands.forEach((operand)=>{
-    operand.addEventListener('click',eventHandler)
-})
 
-
-function displaySmallScreen(number,operator){
-    smallScreen.innerText+=number+operator
-}
-function displayScreen(result){
-   calcScreen.innerText=result
-}
-
-
-function eventHandler(e){
-    override=true
-    storedValue=calcScreen.innerText
-    calcScreen.innerText=''
-    op=e.target.innerText
-    storeData(storedValue,op)
-    displaySmallScreen(storedValue,op)
-    storedValue=null
-    op=null
-    
-    
-
-}
-
-
-var a=[]
-function storeData(number,operator){
-    let result
-    console.log( "Array stored BEFORE before="+a)
-    if(a.length!=1)a.push(number)
-    a.push(operator)
-
-    console.log( "Array stored  before="+a)
-    result=operate(a)
-    console.log( "Array stored after="+a)
-    
-    console.log('result:',result)
-    if(result!=undefined){
-        displayScreen(result)
-        storedValue=result
-    }
-    
-    
-
-}
-
-/*  [1,+,3,-,5,-,7,/,2,=]   len=9*/
-//console.log(operate([2,'+',3,'-',10,'*',2,'/',3,'*',100,'=']))
-
-function operate(){
-    let result
-
-    
-    for(let i=0;i<a.length;i+=2){
-        console.log("i="+i+" array="+a)
-        console.log("X")
-        let temp
-        if(a[i+2]){
-
-            if(a[i+1]=='+'){
-            temp=a[i+2]
-            result = +(a[i])+(+temp)
-            a[i+2]=result
-            
-            a.splice(i,2)
-            
-            }
-            else if(a[i+1]=='-'){
-                temp=a[i+2]
-                result = (+a[i])-(+temp)
-                a[i+2]=result
-                
-                a.splice(i,2)
-            }
-            else if(a[i+1]=='/'){
-                temp=a[i+2]
-                result = (+a[i])/(+temp)
-                a[i+2]=result
-                a.splice(i,2)
-            }
-            else if(a[i+1]=='X'){
-                temp=a[i+2]
-                result = (+a[i])*(+temp)
-                a[i+2]=result
-                a.splice(i,2)
-            }
-
-            if(a[i+1]=='='){
-                result=a[0]
-                a=[result]
-            }
-
-            
-        }
-    }
-    console.log( "array="+a)
-    return result
-
-
-}
