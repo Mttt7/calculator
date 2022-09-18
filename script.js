@@ -33,9 +33,59 @@ logo.addEventListener('click',()=>{
 /* --------------- */
 /* Calculator */
 
+let firstNumber=''
+let secondNumber=''
+let currentOperator=null
+let shouldResetScreen=false
 
 
+const numbers = document.querySelectorAll(".number")
+const operators = document.querySelectorAll(".operator")
+const calculatorScreen = document.querySelector("#screen")
+const AC = document.querySelector("#AC")
+
+numbers.forEach((number)=>{
+    number.addEventListener('click',screenDisplay)
+})
+
+operators.forEach((operator)=>{
+    operator.addEventListener('click',setOperation)
+})
+AC.addEventListener('click',clear)
+
+function clear(){
+    firstNumber=''
+    secondNumber=''
+    currentOperator=null
+    shouldResetScreen=false
+    calculatorScreen.innerText=''
+}
 
 
+function screenDisplay(e){
+    if(shouldResetScreen){
+        calculatorScreen.innerText=e.target.innerText
+        shouldResetScreen=false
+    }
+    else calculatorScreen.innerText+=e.target.innerText
+}
+
+function setOperation(e){
+    switch(e.target.innerText){
+        case '+':
+            currentOperator='+'
+            break
+        case '-':
+            currentOperator='-'
+            break
+        case 'X':
+            currentOperator='X'
+            break
+        case '/':
+            currentOperator='/'
+            break
+
+    }
+}
 
 
