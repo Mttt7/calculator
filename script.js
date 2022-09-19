@@ -22,14 +22,12 @@ clickableButtons.forEach(butt=>{
     
     
 })
-logo.addEventListener('click',()=>{
-    ig="https://www.instagram.com/mtt.jpeg/"
+logo.addEventListener('click',(e)=>{
     git="https://github.com/Mttt7/calculator"
-    window.open(git, '_blank').focus();
-    console.log(1)
-    window.open(ig, '_blank')
-    console.log(2)
+    window.open(git)
 })
+
+
 /* --------------- */
 /* Calculator */
 
@@ -78,7 +76,7 @@ function evaluate(){
     let result=null
     if(currentOperator==null) return
     secondNumber=calculatorScreen.innerText
-    result=doMath()
+    result=Math.round((doMath() + Number.EPSILON) * 100000000000) / 1000000000000
     recentEvaluationsDisplay()
     screenDisplay(result)
     
