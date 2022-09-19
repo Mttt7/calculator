@@ -73,10 +73,11 @@ function backSpace(){
 
 
 function evaluate(){
+    
     let result=null
     if(currentOperator==null) return
     secondNumber=calculatorScreen.innerText
-    result=Math.round((doMath() + Number.EPSILON) * 100000000000) / 1000000000000
+    result=Math.round((doMath() + Number.EPSILON) * 100000000000) / 100000000000
     recentEvaluationsDisplay()
     screenDisplay(result)
     
@@ -86,6 +87,9 @@ function doMath(){
     let a = +firstNumber
     let b = +secondNumber
     let op = currentOperator
+    console.log(firstNumber)
+    console.log(secondNumber)
+    console.log(op)
 
     switch(op){
         case '+':
@@ -95,6 +99,7 @@ function doMath(){
             return a - b
             
         case 'X':
+            console.log(a*b)
             return a * b
             
         case '/':
