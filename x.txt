@@ -1,8 +1,9 @@
+/* AMINATION */
 const testBtn=document.querySelector("#num5")
 const clock=document.querySelector("#clock")
 const logo = document.querySelector("#logo")
 
-/* AMINATION */
+
 const clickableButtons=document.querySelectorAll(".clickable")
 clickableButtons.forEach(butt=>{
     butt.addEventListener('mousedown',(e)=>{
@@ -29,192 +30,131 @@ logo.addEventListener('click',()=>{
     window.open(ig, '_blank')
     console.log(2)
 })
+/* --------------- */
+/* Calculator */
+
+let firstNumber=''
+let secondNumber=''
+let currentOperator=null
+let shouldResetScreen=false
 
 
-/* CLOCK */
-/*
-function updateClock(){ 
-    let date=new Date()
-    
-    let hour=date.getHours()
-    let minute=date.getMinutes()
-    let second=date.getSeconds()
-    if(hour<10){
-        hour="0"+date.getHours()
-    }
-    if(minute<10){
-        minute="0"+date.getHours()
-    }
-    if(second<10){
-        second="0"+date.getHours()
-    }
-    currentTime=hour+":"+minute+":"+second
-    clock.innerHTML=currentTime
-        
-    
-    
-}
-setInterval(updateClock,1000)
-*/
-
-
-/* CALCULATOR */
-const calcScreen = document.querySelector("#screen")
+const numbers = document.querySelectorAll(".number")
+const operators = document.querySelectorAll(".operator")
+const calculatorScreen = document.querySelector("#screen")
 const smallScreen = document.querySelector("#small-screen")
-const AC=document.querySelector("#AC")
-const numbers=document.querySelectorAll(".number")
-const operands=document.querySelectorAll(".operand")
+const AC = document.querySelector("#AC")
+const equalBtn = document.querySelector("#equal")
+const point = document.querySelector("#point")
+const backspace = document.querySelector("#backspace")
 
-
-
-let storedValue=null
-let num1=null
-let num2=null
-let op=null /* add mltp div sub*/
-
-let override=false
-
-numbers.forEach((numb)=>{
-    numb.addEventListener('click',(e)=>{
-        if(override) {
-            calcScreen.innerText=e.target.innerText
-            override=false
-        }
-        else{
-        calcScreen.innerText+=e.target.innerText
-        storedValue+=e.target.innerText
-        }
-
-    })
+numbers.forEach((number)=>{
+    number.addEventListener('click',screenFromEventDisplay)
 })
 
-AC.addEventListener('click',()=>{
-    num1=null
-    op=null
-    num2=null
-    arr=[]
-    calcScreen.innerText=''
-    storedValue=null
-    smallScreen.innerText=''
+operators.forEach((operator)=>{
+    operator.addEventListener('click',setOperation)
 })
+point.addEventListener('click',addPoint)
 
+backspace.addEventListener('click',backSpace)
 
+AC.addEventListener('click',clear)
 
-operands.forEach((operand)=>{
-    operand.addEventListener('click',eventHandler)
-})
+equalBtn.addEventListener('click',evaluate)
 
-
-function displaySmallScreen(number,operator){
-    smallScreen.innerText+=number+operator
+function addPoint(){
+    if(calculatorScreen.innerText.includes('.')) return
+    calculatorScreen.innerText+='.'
 }
-function displayScreen(result){
-   calcScreen.innerText=result
-}
-function eventHandler(e){
-    override=true
-    storedValue=calcScreen.innerText
-    num1=calcScreen.innerText
-    calcScreen.innerText=''
-    op=e.target.innerText
-    storeData(num1,op)
-    displaySmallScreen(num1,op)
-    num1=null
-    op=null
-    
-    
 
+function backSpace(){
+    if(!calculatorScreen.innerText) return
+    calculatorScreen.innerText=calculatorScreen.innerText.slice(0,-1)
 }
 
 
-var arr=[]
-function storeData(number,operator){
-    let result
-    arr.push(number)
-    arr.push(operator)
-    
-    result=operate(arr)
-    
-    
-    console.log("ARR1:",arr)
-    console.log('result:',result)
-    if(result!=undefined) displayScreen(result)
-    
+function evaluate(){
+    let result=null
+    if(currentOperator==null) return
+    secondNumber=calculatorScreen.innerText
+    result=doMath()
+    recentEvaluationsDisplay()
+    screenDisplay(result)
     
 
 }
+function doMath(){
+    let a = +firstNumber
+    let b = +secondNumber
+    let op = currentOperator
 
-/*  [1,+,3,-,5,-,7,/,2,=]   len=9*/
-//console.log(operate([2,'+',3,'-',10,'*',2,'/',3,'*',100,'=']))
-
-function operate(a){
-    let result
-
-    console.log("ARR2",a)
-    for(let i=0;i<a.length;i+=2){
-        console.log("X")
-        let temp
-        if(a[i+2]){
-
-            if(a[i+1]=='+'){
-            temp=a[i+2]
-            result = +(a[i])+(+temp)
-            a[i+2]=result
-            console.log("ARR3",a)
-            a.splice(i,2)
-            
-            }
-            else if(a[i+1]=='-'){
-                temp=a[i+2]
-                result = (+a[i])-(+temp)
-                a[i+2]=result
-                console.log("ARR3",a)
-                a.splice(i,2)
-            }
-            else if(a[i+1]=='/'){
-                temp=a[i+2]
-                result = (+a[i])/(+temp)
-                a[i+2]=result
-                a.splice(i,2)
-            }
-            else if(a[i+1]=='X'){
-                temp=a[i+2]
-                result = (+a[i])*(+temp)
-                a[i+2]=result
-                a.splice(i,2)
-            }
-            else if(a[i+1]=='='){
-                result=a[0]
-                a=[result]
-                console.log("ARRRRAY:",a)
-            }
-        }
-    }
-    return result
-
-
-        /*
-    let result
-    switch(op) {
-        case 'X':
-            result=num1*num2
-            screen.innerText=result
-          break;
+    switch(op){
         case '+':
-            result=(+num1)+(+num2)
-            screen.innerText=result
-          break;
-        case '-':
-            result=num1-num2
-            screen.innerText=result
-          break;
-        case '/':
-            result=num1/num2
-            screen.innerText=result
-          break;
-        default:
+            return a + b
         
-      }
-      return result
-        */
+        case '-':
+            return a - b
+            
+        case 'X':
+            return a * b
+            
+        case '/':
+            if(b==0){
+                return "XD"
+            }
+            return a / b
+            
+    }
+    
 }
+
+
+function clear(){
+    firstNumber=''
+    secondNumber=''
+    currentOperator=null
+    shouldResetScreen=false
+    calculatorScreen.innerText=''
+    smallScreen.innerText=''
+}
+
+
+
+function recentEvaluationsDisplay(){
+    smallScreen.innerText=`${firstNumber} ${currentOperator} ${secondNumber} =`
+}
+function screenDisplay(num){
+    calculatorScreen.innerText=num
+}
+function screenFromEventDisplay(e){
+    if(e.target.innerText=='0' && calculatorScreen.innerHTML=='0') return
+   else if(e.target.innerText!='0' && calculatorScreen.innerHTML=='0') calculatorScreen.innerText=''
+    if(shouldResetScreen){
+        calculatorScreen.innerText=e.target.innerText
+        shouldResetScreen=false
+    }
+    else calculatorScreen.innerText+=e.target.innerText
+}
+
+function setOperation(e){
+    firstNumber=calculatorScreen.innerText
+    switch(e.target.innerText){
+        case '+':
+            currentOperator='+'
+            break
+        case '-':
+            currentOperator='-'
+            break
+        case 'X':
+            currentOperator='X'
+            break
+        case '/':
+            currentOperator='/'
+            break
+
+    }
+    shouldResetScreen=true
+}
+
+

@@ -42,16 +42,73 @@ let shouldResetScreen=false
 const numbers = document.querySelectorAll(".number")
 const operators = document.querySelectorAll(".operator")
 const calculatorScreen = document.querySelector("#screen")
+const smallScreen = document.querySelector("#small-screen")
 const AC = document.querySelector("#AC")
+const equalBtn = document.querySelector("#equal")
+const point = document.querySelector("#point")
+const backspace = document.querySelector("#backspace")
 
 numbers.forEach((number)=>{
-    number.addEventListener('click',screenDisplay)
+    number.addEventListener('click',screenFromEventDisplay)
 })
 
 operators.forEach((operator)=>{
     operator.addEventListener('click',setOperation)
 })
+point.addEventListener('click',addPoint)
+
+backspace.addEventListener('click',backSpace)
+
 AC.addEventListener('click',clear)
+
+equalBtn.addEventListener('click',evaluate)
+
+function addPoint(){
+    if(calculatorScreen.innerText.includes('.')) return
+    calculatorScreen.innerText+='.'
+}
+
+function backSpace(){
+    if(!calculatorScreen.innerText) return
+    calculatorScreen.innerText=calculatorScreen.innerText.slice(0,-1)
+}
+
+
+function evaluate(){
+    let result=null
+    if(currentOperator==null) return
+    secondNumber=calculatorScreen.innerText
+    result=doMath()
+    recentEvaluationsDisplay()
+    screenDisplay(result)
+    
+
+}
+function doMath(){
+    let a = +firstNumber
+    let b = +secondNumber
+    let op = currentOperator
+
+    switch(op){
+        case '+':
+            return a + b
+        
+        case '-':
+            return a - b
+            
+        case 'X':
+            return a * b
+            
+        case '/':
+            if(b==0){
+                return "XD"
+            }
+            return a / b
+            
+    }
+    
+}
+
 
 function clear(){
     firstNumber=''
@@ -59,10 +116,20 @@ function clear(){
     currentOperator=null
     shouldResetScreen=false
     calculatorScreen.innerText=''
+    smallScreen.innerText=''
 }
 
 
-function screenDisplay(e){
+
+function recentEvaluationsDisplay(){
+    smallScreen.innerText=`${firstNumber} ${currentOperator} ${secondNumber} =`
+}
+function screenDisplay(num){
+    calculatorScreen.innerText=num
+}
+function screenFromEventDisplay(e){
+    if(e.target.innerText=='0' && calculatorScreen.innerHTML=='0') return
+   else if(e.target.innerText!='0' && calculatorScreen.innerHTML=='0') calculatorScreen.innerText=''
     if(shouldResetScreen){
         calculatorScreen.innerText=e.target.innerText
         shouldResetScreen=false
@@ -71,6 +138,7 @@ function screenDisplay(e){
 }
 
 function setOperation(e){
+    firstNumber=calculatorScreen.innerText
     switch(e.target.innerText){
         case '+':
             currentOperator='+'
@@ -86,6 +154,7 @@ function setOperation(e){
             break
 
     }
+    shouldResetScreen=true
 }
 
 
