@@ -77,7 +77,9 @@ function evaluate(){
     let result=null
     if(currentOperator==null) return
     secondNumber=calculatorScreen.innerText
-    result=Math.round((doMath() + Number.EPSILON) * 100000000000) / 100000000000
+    result=doMath()
+    if(result!='XD') result=Math.round((doMath() + Number.EPSILON) * 100000000000) / 100000000000
+    
     recentEvaluationsDisplay()
     screenDisplay(result)
     
@@ -106,7 +108,7 @@ function doMath(){
             if(b==0){
                 return "XD"
             }
-            return a / b
+            else return a / b
             
     }
     
