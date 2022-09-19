@@ -1,6 +1,8 @@
 @font-face {
     font-family: calcFont;
-    src: url(fonts/digit7.ttf);
+    src: url('/fonts/digit7.ttf') format('truetype'),
+         url('/fonts/digit7.eot') format('embedded-opentype'),
+         url('/fonts/digit7.svg') format('svg');
 }
 
 :root {
