@@ -96,7 +96,7 @@ body{
     background-image: linear-gradient(to left, rgba(42, 213, 236, 0.68), rgba(216, 220, 211, 0.762));
 }
 #screen-wrapper{
-    height: 100px;
+    height: 140px;
     display: flex;
     justify-content: flex-end;
     align-items: center;
@@ -112,7 +112,7 @@ body{
     gap: 25px;
 }
 #screen{
-    height: 90px;
+   
     display: flex;
     justify-content: flex-end;
     font-size: 90px;
